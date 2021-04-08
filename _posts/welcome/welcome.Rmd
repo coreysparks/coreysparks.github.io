@@ -2,7 +2,7 @@
 title: "Welcome to Corey S. Sparks's Blog"
 description: |
   Welcome to my new blog. Here I will regularly post examples from my courses, and other content in the areas of demography, statistics and data science. I hope you enjoy 
-  reading what I have to say, and please contact me with any questions or feedback!
+  reading what I have to say, and please contact me with any questions or feedback! - Regularly contributing to [R-Bloggers](https://www.r-bloggers.com)
 author:
   - name: Corey S. Sparks
     url: https://github.com/coreysparks
@@ -14,6 +14,8 @@ output:
     self_contained: false
 ---
 
+
+### This blog will regularly contribute to the [R-Bloggers Feed](https://www.r-bloggers.com/)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
