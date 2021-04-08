@@ -1,0 +1,27 @@
+name: "coreysparks.github.io"
+title: "Corey Sparks Blog"
+description: |
+  Corey Sparks Blog - Demography and Data Science
+google_analytics: UA-38742713-2
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - text: "Teaching"
+      href: teaching.html
+    - text: "CV"
+      href: https://docs.google.com/document/d/e/2PACX-1vTD024zHCwAhgLPoLnlnuYrFjybPl4OV0v8SRBidQeVbHYASWG0A_OQ8UmQAWb8Dz6_gtnpmnEQMaPu/pub
+    - icon: fa-envelope-o
+      href: mailto:corey.sparks@utsa.edu
+    - icon: fa-github
+      href: https://github.com/coreysparks
+    - icon: fa-twitter
+      href: https://twitter.com/coreysparks1
+    - icon: fa-linkedin
+      href: https://www.linkedin.com/in/corey-sparks-17b0911b/
+    - icon: fa fa-rss
+      href: index.xml
+output: distill::distill_article
