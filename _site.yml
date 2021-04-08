@@ -3,7 +3,7 @@ title: "Corey Sparks Blog"
 description: |
   Corey Sparks Blog - Demography and Data Science
 google_analytics: UA-38742713-2
-base_url: coreysparks.github.io
+base_url: https://coreysparks.github.io
 output_dir: "docs"
 navbar:
   right:

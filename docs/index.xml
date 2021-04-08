@@ -2,8 +2,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
     <title>Corey Sparks Blog</title>
-    <link>coreysparks.github.io</link>
-    <atom:link href="coreysparks.github.io/index.xml" rel="self" type="application/rss+xml"/>
+    <link>https://coreysparks.github.io</link>
+    <atom:link href="https://coreysparks.github.io/index.xml" rel="self" type="application/rss+xml"/>
     <description>Corey Sparks Blog - Demography and Data Science
 </description>
     <generator>Distill</generator>
@@ -11,54 +11,54 @@
     <item>
       <title>Basic Classification Methods</title>
       <dc:creator>Corey S. Sparks</dc:creator>
-      <link>coreysparks.github.io/posts/2021-04-07-basic-classification-methods</link>
+      <link>https://coreysparks.github.io/posts/2021-04-07-basic-classification-methods</link>
       <description>An introduction to basic methods of classification and prediction.</description>
       <category>Multivariate</category>
       <category>Machine learning</category>
-      <guid>coreysparks.github.io/posts/2021-04-07-basic-classification-methods</guid>
+      <guid>https://coreysparks.github.io/posts/2021-04-07-basic-classification-methods</guid>
       <pubDate>Wed, 07 Apr 2021 00:00:00 +0000</pubDate>
-      <media:content url="coreysparks.github.io/posts/2021-04-07-basic-classification-methods/basic-classification-methods_files/figure-html5/unnamed-chunk-8-1.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="https://coreysparks.github.io/posts/2021-04-07-basic-classification-methods/basic-classification-methods_files/figure-html5/unnamed-chunk-8-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Introduction to Cluster analysis</title>
       <dc:creator>Corey S. Sparks</dc:creator>
-      <link>coreysparks.github.io/posts/2021-04-07-introduction-to-cluster-analysis</link>
+      <link>https://coreysparks.github.io/posts/2021-04-07-introduction-to-cluster-analysis</link>
       <description>A short introduction to various clustering methods.</description>
       <category>Machine Learning</category>
       <category>Multivariate</category>
-      <guid>coreysparks.github.io/posts/2021-04-07-introduction-to-cluster-analysis</guid>
+      <guid>https://coreysparks.github.io/posts/2021-04-07-introduction-to-cluster-analysis</guid>
       <pubDate>Wed, 07 Apr 2021 00:00:00 +0000</pubDate>
-      <media:content url="coreysparks.github.io/posts/2021-04-07-introduction-to-cluster-analysis/introduction-to-cluster-analysis_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="https://coreysparks.github.io/posts/2021-04-07-introduction-to-cluster-analysis/introduction-to-cluster-analysis_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Point Pattern Analysis using R and QGIS</title>
       <dc:creator>Corey S. Sparks</dc:creator>
-      <link>coreysparks.github.io/posts/2021-04-07-point-pattern-analysis-using-r-and-qgis</link>
+      <link>https://coreysparks.github.io/posts/2021-04-07-point-pattern-analysis-using-r-and-qgis</link>
       <description>This example shows how to use R and QGIS from within R to perform a series of common point pattern analysis techniques.</description>
       <category>Spatial Analysis</category>
       <category>GIS</category>
-      <guid>coreysparks.github.io/posts/2021-04-07-point-pattern-analysis-using-r-and-qgis</guid>
+      <guid>https://coreysparks.github.io/posts/2021-04-07-point-pattern-analysis-using-r-and-qgis</guid>
       <pubDate>Wed, 07 Apr 2021 00:00:00 +0000</pubDate>
-      <media:content url="coreysparks.github.io/posts/2021-04-07-point-pattern-analysis-using-r-and-qgis/point-pattern-analysis-using-r-and-qgis_files/figure-html5/unnamed-chunk-17-1.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="https://coreysparks.github.io/posts/2021-04-07-point-pattern-analysis-using-r-and-qgis/point-pattern-analysis-using-r-and-qgis_files/figure-html5/unnamed-chunk-17-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Raster Analysis using R - Some social science applications</title>
       <dc:creator>Corey S. Sparks</dc:creator>
-      <link>coreysparks.github.io/posts/2021-04-07-raster-analysis-using-r-some-social-science-applications</link>
+      <link>https://coreysparks.github.io/posts/2021-04-07-raster-analysis-using-r-some-social-science-applications</link>
       <description>Using R for some fundamental raster analyses.</description>
       <category>Spatial Analysis</category>
       <category>GIS</category>
-      <guid>coreysparks.github.io/posts/2021-04-07-raster-analysis-using-r-some-social-science-applications</guid>
+      <guid>https://coreysparks.github.io/posts/2021-04-07-raster-analysis-using-r-some-social-science-applications</guid>
       <pubDate>Wed, 07 Apr 2021 00:00:00 +0000</pubDate>
-      <media:content url="coreysparks.github.io/posts/2021-04-07-raster-analysis-using-r-some-social-science-applications/raster-analysis-using-r-some-social-science-applications_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="https://coreysparks.github.io/posts/2021-04-07-raster-analysis-using-r-some-social-science-applications/raster-analysis-using-r-some-social-science-applications_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Welcome to Corey S. Sparks's Blog</title>
       <dc:creator>Corey S. Sparks</dc:creator>
-      <link>coreysparks.github.io/posts/welcome</link>
+      <link>https://coreysparks.github.io/posts/welcome</link>
       <description>Welcome to my new blog. Here I will regularly post examples from my courses, and other content in the areas of demography, statistics and data science. I hope you enjoy 
 reading what I have to say, and please contact me with any questions or feedback!</description>
-      <guid>coreysparks.github.io/posts/welcome</guid>
+      <guid>https://coreysparks.github.io/posts/welcome</guid>
       <pubDate>Wed, 07 Apr 2021 00:00:00 +0000</pubDate>
     </item>
   </channel>

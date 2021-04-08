@@ -5,14 +5,14 @@
       "title": "About Me",
       "author": [],
       "contents": "\r\n\r\n          \r\n          \r\n          Corey Sparks Blog\r\n          \r\n          \r\n          Home\r\n          About\r\n          Teaching\r\n          CV\r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          \r\n          ☰\r\n          \r\n          \r\n      \r\n        \r\n          \r\n            About Me\r\n          \r\n          \r\n            \r\n              I am an associate professor in the Department of Demography at the University of Texas at San Antonio.\r\n              I am also the current co-editor of Population Research and Policy Review\r\n              My research focuses primarily on spatial and statistical demography. Substantively, I am interested in human health disparities, food security, historical demography and demography of anthropological populations.\r\n              My teaching focuses on the use and application of advanced statistical techniques including hierarchical modeling, hazard modeling, multivariate methods and spatial statistics in human population analysis.\r\n              I contribute regularly to the Rpubs site, and you can find lots of R examples for demographic analysis here\r\n            \r\n            \r\n              I am an associate professor in the Department of Demography at the University of Texas at San Antonio.\r\n              I am also the current co-editor of Population Research and Policy Review\r\n              My research focuses primarily on spatial and statistical demography. Substantively, I am interested in human health disparities, food security, historical demography and demography of anthropological populations.\r\n              My teaching focuses on the use and application of advanced statistical techniques including hierarchical modeling, hazard modeling, multivariate methods and spatial statistics in human population analysis.\r\n              I contribute regularly to the Rpubs site, and you can find lots of R examples for demographic analysis here\r\n            \r\n          \r\n\r\n          \r\n            \r\n              \r\n          \r\n\r\n          \r\n            \r\n              \r\n                              \r\n            \r\n          \r\n        \r\n      \r\n    \r\n\r\n    \r\n    \r\n    ",
-      "last_modified": "2021-04-08T13:19:53-05:00"
+      "last_modified": "2021-04-08T13:24:13-05:00"
     },
     {
       "path": "index.html",
       "title": "Corey S. Sparks' Blog",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-04-08T13:19:55-05:00"
+      "last_modified": "2021-04-08T13:24:14-05:00"
     },
     {
       "path": "teaching.html",
@@ -21,7 +21,7 @@
       "author": [],
       "date": "`r Sys.Date()`",
       "contents": "\r\nHere are the courses I teach in our program in Applied Demography.\r\nWhile at UTSA, I have had the opportunity to develop effective and current courses. My teaching while in the Department of Demography has focused on two main areas; advanced quantitative methods and spatial analysis.\r\nI have designed courses in introductory statistics, hierarchical models and hazards analysis, in addition to two courses in Geographic Information Systems and spatial statistics.\r\nIn general, my philosophy towards instruction is to provide students with up to date instruction on methods that are currently being employed by professionals in the diverse field of demography, and provide an arena for them to gain experience using these methods on practical and realistic examples.\r\nThe courses I teach stress the application of the R programming language and the use of the Linux environment. I encourage hands on usage of computers, along with modern data visualization methods to enhance the learning of students, and I believe based on discussions with colleagues at other institutions, that the curriculum represents a unique graduate educational experience.\r\nSyllabi\r\nAll of my current syllabi can be found the UTSA Bluebook page.\r\nCurrent Courses\r\nMy current course examples can be seen at my Rpubs page at at my Github repository\r\nDemog 7223 Advanced methods for life table analysis\r\nDemog 7283 Statistical Methods for Demographic Data 2\r\nDemog 7263 Spatial Demography\r\nDemog 7093 GIS for Population Science\r\nDemog 7273 Statistical Methods for Demographic Data 1\r\nDemog 7473 Applied Hierarchical Modeling\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-04-08T13:19:56-05:00"
+      "last_modified": "2021-04-08T13:24:16-05:00"
     }
   ],
   "collections": ["posts/posts.json"]
