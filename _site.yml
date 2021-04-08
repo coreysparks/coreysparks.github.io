@@ -1,7 +1,7 @@
 name: "coreysparks.github.io"
-title: "Corey Sparks Blog"
+title: "Corey Sparks's Blog"
 description: |
-  Corey Sparks Blog - Demography and Data Science
+  Corey Sparks's Blog - Demography and Data Science
 google_analytics: UA-38742713-2
 base_url: https://coreysparks.github.io
 output_dir: "docs"

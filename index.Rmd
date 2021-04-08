@@ -3,3 +3,5 @@ title: "Corey S. Sparks' Blog"
 site: distill::distill_website
 listing: posts
 ---
+
+This blog will regularly contribute to the [R-Bloggers Feed](https://www.r-bloggers.com/)
