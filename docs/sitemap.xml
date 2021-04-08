@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
+  <url>
+    <loc>coreysparks.github.io/about.html</loc>
+    <lastmod>2021-04-08T09:57:20-05:00</lastmod>
+  </url>
+  <url>
+    <loc>coreysparks.github.io/</loc>
+    <lastmod>2021-04-08T09:57:20-05:00</lastmod>
+  </url>
+  <url>
+    <loc>coreysparks.github.io/teaching.html</loc>
+    <lastmod>2021-04-08T09:57:20-05:00</lastmod>
+  </url>
+  <url>
+    <loc>coreysparks.github.io/posts/2021-04-07-basic-classification-methods/</loc>
+    <lastmod>2021-04-08T09:57:20-05:00</lastmod>
+  </url>
+  <url>
+    <loc>coreysparks.github.io/posts/2021-04-07-introduction-to-cluster-analysis/</loc>
+    <lastmod>2021-04-08T09:57:20-05:00</lastmod>
+  </url>
+  <url>
+    <loc>coreysparks.github.io/posts/2021-04-07-point-pattern-analysis-using-r-and-qgis/</loc>
+    <lastmod>2021-04-08T09:57:20-05:00</lastmod>
+  </url>
+  <url>
+    <loc>coreysparks.github.io/posts/2021-04-07-raster-analysis-using-r-some-social-science-applications/</loc>
+    <lastmod>2021-04-08T09:57:20-05:00</lastmod>
+  </url>
+  <url>
+    <loc>coreysparks.github.io/posts/welcome/</loc>
+    <lastmod>2021-04-08T09:57:20-05:00</lastmod>
+  </url>
+</urlset>
