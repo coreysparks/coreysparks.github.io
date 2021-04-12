@@ -7,7 +7,16 @@
     <description>Corey Sparks's Blog - Demography and Data Science
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 07 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Using `tidyr` to reshape longitudinal data - a success story</title>
+      <dc:creator>Corey S. Sparks, Ph.D.</dc:creator>
+      <link>https://coreysparks.github.io/posts/2021-04-12-longitudinal-tidy-of-eclsk</link>
+      <description>This post shows how to use tidyr to reshape multiple variables at the same time.</description>
+      <guid>https://coreysparks.github.io/posts/2021-04-12-longitudinal-tidy-of-eclsk</guid>
+      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://coreysparks.github.io/posts/2021-04-12-longitudinal-tidy-of-eclsk/longitudinal-tidy-of-eclsk_files/figure-html5/unnamed-chunk-6-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Basic Classification Methods</title>
       <dc:creator>Corey S. Sparks</dc:creator>

@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Corey Sparks, Ph.D." />
+
+<meta name="date" content="2021-04-12" />
+
+<title>Using tidyr to reshape wide to long data - a success story</title>
+
+<!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content=""/>
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      tolerance: 5,
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #0F2E3D;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+  min-width: 150px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+/* adjust viewport for navbar height */
+/* helps vertically center bootstrap (non-distill) content */
+.min-vh-100 {
+  min-height: calc(100vh - 100px) !important;
+}
+
+</style>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
+  }
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+              : '';
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description || ''}
+                </div>
+                <div class="search-item-preview">
+                  ${img}
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+.nav-search {
+  font-size: x-small;
+}
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
+  }
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  font-size: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
+<!--/radix_placeholder_navigation_in_header-->
+<!--radix_placeholder_site_in_header-->
+<script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=UA-38742713-2"></script>
+<script type="text/javascript" cookie-consent="tracking">
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-38742713-2');
+</script>
+<!--/radix_placeholder_site_in_header-->
+
+<style type="text/css">
+body {
+  padding-top: 60px;
+}
+</style>
+<script src="C:\Users\ozd504\R\win-library\4.0\rmarkdown\rmd\h\pandoc\header-attrs.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+/* A workaround for https://github.com/jgm/pandoc/issues/4278 */
+a.sourceLine {
+  pointer-events: auto;
+}
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<link rel="stylesheet" href="long_tidy_files/style.css" type="text/css" />
+
+
+
+
+
+</head>
+
+<body>
+
+
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="index.html" class="title">Corey Sparks's Blog</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="teaching.html">Teaching</a>
+<a href="https://docs.google.com/document/d/e/2PACX-1vTD024zHCwAhgLPoLnlnuYrFjybPl4OV0v8SRBidQeVbHYASWG0A_OQ8UmQAWb8Dz6_gtnpmnEQMaPu/pub">CV</a>
+<a href="mailto:corey.sparks@utsa.edu">
+<i class="fa fa-envelope-o" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/coreysparks">
+<i class="fa fa-github" aria-hidden="true"></i>
+</a>
+<a href="https://twitter.com/coreysparks1">
+<i class="fa fa-twitter" aria-hidden="true"></i>
+</a>
+<a href="https://www.linkedin.com/in/corey-sparks-17b0911b/">
+<i class="fa fa-linkedin" aria-hidden="true"></i>
+</a>
+<a href="index.xml">
+<i class="fa fa-rss" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+
+<section class="page-header">
+<h1 class="title toc-ignore project-name">Using <code>tidyr</code> to reshape wide to long data - a success story</h1>
+<h4 class="author project-author">Corey Sparks, Ph.D.</h4>
+<h4 class="date project-date">2021-04-12</h4>
+</section>
+
+
+
+<section class="main-content">
+<p>When using longitudial survey data, we often have to reshape from long to wide form routinely. For the longest time I’d used <code>stats::reshape()</code> in the base R, but I’ve wanted to try to put this into the tidyverse for a long time, mainly to make use of all the tidyverse verbs.</p>
+<p>The problem was that I’ve found the examples of how to use <code>pivot_longer()</code> a bit limited, usually only reshaping one variable into the long form. In my data and examples for my classes, I often have several time-varying variables to reshape, not just 1 or 2.</p>
+<p>Below, I use data from the <a href="https://nces.ed.gov/ecls/kindergarten2011.asp">Early Childhood Longitudinal Survey - Kindergarten Cohort, 2011</a>, which is a large, nationally representative survey data collection project which follows over 18,000 children from kindergarten through 5th grade.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (car)</span></code></pre></div>
+<pre><code>## Loading required package: carData</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:car&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div id="data-and-recodes" class="section level2">
+<h2>Data and recodes</h2>
+<p>First we load our data</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;~/OneDrive - University of Texas at San Antonio//classes/dem7283/class_21_7283/data/eclsk_2011/eclsk_k5.Rdata&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(eclskk5)<span class="ot">&lt;-</span><span class="fu">tolower</span>(<span class="fu">names</span>(eclskk5))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#get out only the variables I&#39;m going to use for this example</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#subset the data</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="ot">&lt;-</span>eclskk5<span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(childid, x_chsex_r, x1locale, x_raceth_r, x2povty, x12par1ed_i, p1curmar,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>         x1htotal, x1mscalk5, x2mscalk5, x3mscalk5, x4mscalk5, x5mscalk5, p1hscale,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>         p2hscale, p4hscale, x2fsstat2, x4fsstat2, x4fsstat2, x12sesl, x4sesl_i,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>         p2parct1, p2parct2, s1_id, p2safepl, x2krceth, p1o2near, x_distpov, w1c0,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>         w1p0, w2p0, w1c0str, w1p0str, w4c4p_40, w4c4p_4str,w4c4p_4psu, w1c0psu,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>         w1p0psu, x1height, x2height, x4height, x4height, x5height, x1kage_r,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>         x2kage_r, x3age, x4age, x5age)</span></code></pre></div>
+</div>
+<div id="time-constant-variables" class="section level2">
+<h2>Time constant variables</h2>
+<p>First, I do some recoding of variables. First, we code time <strong>invariant</strong> variables, meaning their values do not change at each wave.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Non time varying variables</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#First we recode some Child characteristics</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Child&#39;s sex: recode as male =1</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>male<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>x_chsex_r, <span class="at">recodes=</span><span class="st">&quot;1=1; 2=0; -9=NA&quot;</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode race with white, non Hispanic as reference using dummy vars</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>hisp<span class="ot">&lt;-</span><span class="fu">Recode</span> (eclsk.sub<span class="sc">$</span>x_raceth_r, <span class="at">recodes=</span><span class="st">&quot;3:4=1;-9=NA; else=0&quot;</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>black<span class="ot">&lt;-</span><span class="fu">Recode</span> (eclsk.sub<span class="sc">$</span>x_raceth_r, <span class="at">recodes=</span><span class="st">&quot;2=1;-9=NA; else=0&quot;</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>asian<span class="ot">&lt;-</span><span class="fu">Recode</span> (eclsk.sub<span class="sc">$</span>x_raceth_r, <span class="at">recodes=</span><span class="st">&quot;5=1;-9=NA; else=0&quot;</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>nahn<span class="ot">&lt;-</span><span class="fu">Recode</span> (eclsk.sub<span class="sc">$</span>x_raceth_r, <span class="at">recodes=</span><span class="st">&quot;6:7=1;-9=NA; else=0&quot;</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>other<span class="ot">&lt;-</span><span class="fu">Recode</span> (eclsk.sub<span class="sc">$</span>x_raceth_r, <span class="at">recodes=</span><span class="st">&quot;8=1;-9=NA; else=0&quot;</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Then we recode some parent/mother characteristics</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Mother&#39;s education, recode as 2 dummys with HS = reference</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>lths<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>x12par1ed_i, <span class="at">recodes =</span> <span class="st">&quot;0:2=1; 3:8=0; else = NA&quot;</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>gths<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>x12par1ed_i, <span class="at">recodes =</span> <span class="st">&quot;1:3=0; 4:8=1; else =NA&quot;</span>) </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#marital status, recode as 2 dummys, ref= married</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>single<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>p1curmar, <span class="at">recodes=</span><span class="st">&quot;4=1; -7:-9=NA; else=0&quot;</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>notmar<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>p1curmar, <span class="at">recodes=</span><span class="st">&quot;2:3=1; -7:-9=NA; else=0&quot;</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">#Then we do some household level variables</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">#Urban school location = 1</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>urban<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>x1locale, <span class="at">recodes =</span> <span class="st">&quot;1:3=1; 4=0; -1:-9=NA&quot;</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co">#poverty level in poverty = 1</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>pov<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>x2povty , <span class="at">recodes =</span><span class="st">&quot;1:2=1; 3=0; -9=NA&quot;</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">#Household size</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>hhsize<span class="ot">&lt;-</span>eclsk.sub<span class="sc">$</span>x1htotal</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co">#school % minority student body</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>minorsch<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x2krceth <span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x2krceth<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="co">#Unsafe neighborhood</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>unsafe<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>p2safepl , <span class="at">recodes =</span> <span class="st">&quot;1:2=&#39;unsafe&#39;; 3=&#39;safe&#39;; else=NA&quot;</span>,<span class="at">as.factor =</span> T)</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="co">#school district poverty</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>dist_pov<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x_distpov<span class="sc">==-</span><span class="dv">9</span>, <span class="cn">NA</span>, <span class="fu">scale</span>(eclsk.sub<span class="sc">$</span>x_distpov))</span></code></pre></div>
+</div>
+<div id="time-varying-variables" class="section level2">
+<h2>Time varying variables</h2>
+<p>I have to make the repeated measures of each of my longitudinal variables. These are referred to as <strong>time varying</strong> variables, meaning their values change at each wave.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Longitudinal variables</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#recode the outcomes, the  first is the child&#39;s math standardized test score in Kindergarten</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>math_1<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x1mscalk5<span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x1mscalk5)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>math_2<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x2mscalk5<span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x2mscalk5)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>math_4<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x4mscalk5<span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x4mscalk5)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Second outcome is child&#39;s height for age, continuous outcome</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>height_1<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x1height<span class="sc">&lt;=-</span><span class="dv">7</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x1height)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>height_2<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x2height<span class="sc">&lt;=-</span><span class="dv">7</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x2height)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>height_4<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x4height<span class="sc">&lt;=-</span><span class="dv">7</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x4height)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Age at each wave</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>ageyrs_1<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x1kage_r<span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x1kage_r<span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>ageyrs_2<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x2kage_r<span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x2kage_r<span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>ageyrs_4<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x4age<span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>x4age<span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="ot">&lt;-</span> eclsk.sub[<span class="fu">is.na</span>(eclsk.sub<span class="sc">$</span>ageyrs_1)<span class="sc">==</span>F, ]</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Height for age z score standardized by sex and age</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>heightz_1<span class="ot">&lt;-</span><span class="fu">ave</span>(eclsk.sub<span class="sc">$</span>height_1, <span class="fu">as.factor</span>(<span class="fu">paste</span>(<span class="fu">round</span>(eclsk.sub<span class="sc">$</span>ageyrs_1, <span class="fl">1.5</span>), eclsk.sub<span class="sc">$</span>male)), <span class="at">FUN=</span>scale)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>heightz_2<span class="ot">&lt;-</span><span class="fu">ave</span>(eclsk.sub<span class="sc">$</span>height_2, <span class="fu">as.factor</span>(<span class="fu">paste</span>(<span class="fu">round</span>(eclsk.sub<span class="sc">$</span>ageyrs_2, <span class="fl">1.5</span>), eclsk.sub<span class="sc">$</span>male)), <span class="at">FUN=</span>scale)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>heightz_4<span class="ot">&lt;-</span><span class="fu">ave</span>(eclsk.sub<span class="sc">$</span>height_4, <span class="fu">as.factor</span>(<span class="fu">paste</span>(<span class="fu">round</span>(eclsk.sub<span class="sc">$</span>ageyrs_4, <span class="fl">1.5</span>), eclsk.sub<span class="sc">$</span>male)), <span class="at">FUN=</span>scale)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#Household food insecurity, dichotomous outcome</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>foodinsec_1<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>x2fsstat2, <span class="at">recodes=</span><span class="st">&quot;2:3=1; 1=0; else=NA&quot;</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>foodinsec_2<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>x2fsstat2, <span class="at">recodes=</span><span class="st">&quot;2:3=1; 1=0; else=NA&quot;</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>foodinsec_4<span class="ot">&lt;-</span><span class="fu">Recode</span>(eclsk.sub<span class="sc">$</span>x4fsstat2, <span class="at">recodes=</span><span class="st">&quot;2:3=1; 1=0; else=NA&quot;</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co">#Child health assessment Excellent to poor , ordinal outcome</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>chhealth_1<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>p1hscale<span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>p1hscale)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>chhealth_2<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>p2hscale<span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>p2hscale)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>chhealth_4<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>p4hscale<span class="sc">&lt;</span><span class="dv">0</span>, <span class="cn">NA</span>, eclsk.sub<span class="sc">$</span>p4hscale)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co">#SES</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>hhses_1<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x12sesl<span class="sc">==-</span><span class="dv">9</span>, <span class="cn">NA</span>, <span class="fu">scale</span>(eclsk.sub<span class="sc">$</span>x12sesl))</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>hhses_2<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x12sesl<span class="sc">==-</span><span class="dv">9</span>, <span class="cn">NA</span>, <span class="fu">scale</span>(eclsk.sub<span class="sc">$</span>x12sesl))</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>eclsk.sub<span class="sc">$</span>hhses_4<span class="ot">&lt;-</span><span class="fu">ifelse</span>(eclsk.sub<span class="sc">$</span>x4sesl_i<span class="sc">==-</span><span class="dv">9</span>, <span class="cn">NA</span>, <span class="fu">scale</span>(eclsk.sub<span class="sc">$</span>x4sesl_i))</span></code></pre></div>
+</div>
+<div id="reshaping-data-into-longitudinal-format" class="section level2">
+<h2>Reshaping data into longitudinal format</h2>
+<p>To analyze data longitudinally, we must reshape the data from its current “wide” format, where each repeated measure is a column, into the “long” format, where there is a single column for a particular variable, and we account for the repeated measurements of each person. In this case, I’m going to use three waves of data, so each child can contribute up to three lines to the data.</p>
+<p>The <code>reshape()</code> function will do this for us, but below I use a tidy method, using a <code>pivot_longer()</code> in the <code>tidyr</code> packages.</p>
+<p>For the longest time I’d used <code>stats::reshape()</code> in the base R, but I’ve wanted to try to put this into the tidyverse for a long time. The problem was that I’ve found the examples of how to use <code>pivot_longer()</code> a bit limited, usually only reshaping one variable into the long form. In my data and examples for my classes, I often have several time-varying variables to reshape, not just 1 or 2.</p>
+<p>Below, I <code>select()</code> the variables that I want to work with, and use <code>pivot_longer()</code>. I can specify the non-time varying variables in the <code>cols()</code> argument, then the default machinery works pretty well, <strong>as long as my variable names are nice and have names like</strong> <strong><em>x_1</em></strong>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>e.long.comp<span class="ot">&lt;-</span>eclsk.sub<span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">wt =</span> w4c4p_40,<span class="at">strata=</span> w4c4p_4str, <span class="at">psu =</span> w4c4p_4psu)<span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(childid,male, hisp, black, asian, nahn, other,wt, strata, psu, <span class="co">#time constant</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         height_1, height_2, height_4, <span class="co">#t-varying variables</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>         ageyrs_1, ageyrs_2, ageyrs_4,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>         chhealth_1, chhealth_2, chhealth_4,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>         foodinsec_1, foodinsec_2, foodinsec_4,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>         hhses_1, hhses_2, hhses_4,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>         math_1,math_2, math_4)<span class="sc">%&gt;%</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>childid, <span class="sc">-</span>male, <span class="sc">-</span>hisp, <span class="sc">-</span>black, <span class="sc">-</span>asian,<span class="sc">-</span>nahn, <span class="sc">-</span>other, <span class="sc">-</span>wt, <span class="sc">-</span>strata, <span class="sc">-</span>psu), <span class="co">#time constant variables go here</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to  =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;wave&quot;</span>), <span class="co">#make wave variable and put t-v vars into columns</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>)<span class="sc">%&gt;%</span> <span class="co">#all t-v variables have _ between name and time, like age_1, age_2</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.))<span class="sc">%&gt;%</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(childid, wave)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(e.long.comp)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 17
+##   childid   male  hisp black asian  nahn other    wt strata   psu wave  height
+##   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
+## 1 10000001     1     0     0     0     0     0  322.     69     3 1       44.5
+## 2 10000001     1     0     0     0     0     0  322.     69     3 2       45.8
+## 3 10000001     1     0     0     0     0     0  322.     69     3 4       48  
+## 4 10000002     0     0     0     0     0     0  475.     43     2 1       45.6
+## 5 10000002     0     0     0     0     0     0  475.     43     2 2       47  
+## 6 10000002     0     0     0     0     0     0  475.     43     2 4       49.5
+## # ... with 5 more variables: ageyrs &lt;dbl&gt;, chhealth &lt;dbl&gt;, foodinsec &lt;dbl&gt;,
+## #   hhses &lt;dbl&gt;, math &lt;dbl&gt;</code></pre>
+<div id="visualization-of-longitudinal-data" class="section level3">
+<h3>Visualization of longitudinal data</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>first10<span class="ot">&lt;-</span><span class="fu">unique</span>(e.long.comp<span class="sc">$</span>childid)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>sub<span class="ot">&lt;-</span>e.long.comp<span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(childid<span class="sc">%in%</span>first10)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sub, <span class="fu">aes</span>(<span class="at">x=</span>ageyrs, <span class="at">y=</span>math))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>,<span class="at">formula=</span>y<span class="sc">~</span>x)<span class="sc">+</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>childid,<span class="at">nrow =</span> <span class="dv">3</span>)<span class="sc">+</span><span class="fu">ggtitle</span>(<span class="at">label =</span> <span class="st">&quot;Change in Math score across age&quot;</span>, <span class="at">subtitle =</span> <span class="st">&quot;First 10 children in ECLS-K 2011&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in qt((1 - level)/2, df): NaNs produced
+
+## Warning in qt((1 - level)/2, df): NaNs produced</code></pre>
+<pre><code>## Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning -
+## Inf
+
+## Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning -
+## Inf</code></pre>
+<p><img src="long_tidy_files/figure-html/unnamed-chunk-6-1.png" /><!-- --></p>
+</div>
+</div>
+</section>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
