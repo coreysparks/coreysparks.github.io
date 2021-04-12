@@ -1,0 +1,188 @@
+---
+title: "Using `tidyr` to reshape longitudinal data - a success story"
+description: |
+  This post shows how to use tidyr to reshape multiple variables at the same time.
+author:
+  - name: Corey S. Sparks, Ph.D.
+    url: https://github.com/coreysparks
+date: 04-12-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+When using longitudial survey data, we often have to reshape from long to wide form routinely. For the longest time I'd used `stats::reshape()` in the base R, but I've wanted to try to put this into the tidyverse for a long time, mainly to make use of all the tidyverse verbs.
+
+The problem was that I've found the examples of how to use `pivot_longer()` a bit limited, usually only reshaping one variable into the long form. In my data and examples for my classes, I often have several time-varying variables to reshape, not just 1 or 2. 
+
+Below, I use data from the [Early Childhood Longitudinal Survey - Kindergarten Cohort, 2011](https://nces.ed.gov/ecls/kindergarten2011.asp), which is a large, nationally representative survey data collection project which follows over 18,000 children from kindergarten through 5th grade. 
+
+```{r}
+library (car)
+library(dplyr)
+```
+
+
+## Data and recodes
+First we load our data
+```{r, message=FALSE}
+load("~/OneDrive - University of Texas at San Antonio//classes/dem7283/class_21_7283/data/eclsk_2011/eclsk_k5.Rdata")
+names(eclskk5)<-tolower(names(eclskk5))
+#get out only the variables I'm going to use for this example
+
+#subset the data
+
+eclsk.sub<-eclskk5%>%
+  select(childid, x_chsex_r, x1locale, x_raceth_r, x2povty, x12par1ed_i, p1curmar,
+         x1htotal, x1mscalk5, x2mscalk5, x3mscalk5, x4mscalk5, x5mscalk5, p1hscale,
+         p2hscale, p4hscale, x2fsstat2, x4fsstat2, x4fsstat2, x12sesl, x4sesl_i,
+         p2parct1, p2parct2, s1_id, p2safepl, x2krceth, p1o2near, x_distpov, w1c0,
+         w1p0, w2p0, w1c0str, w1p0str, w4c4p_40, w4c4p_4str,w4c4p_4psu, w1c0psu,
+         w1p0psu, x1height, x2height, x4height, x4height, x5height, x1kage_r,
+         x2kage_r, x3age, x4age, x5age)
+
+
+```
+
+
+ 
+## Time constant variables
+
+First, I do some recoding of variables. First, we code time **invariant** variables, meaning their values do not change at each wave. 
+
+```{r}
+#Non time varying variables
+#First we recode some Child characteristics
+#Child's sex: recode as male =1
+eclsk.sub$male<-Recode(eclsk.sub$x_chsex_r, recodes="1=1; 2=0; -9=NA")
+
+#Recode race with white, non Hispanic as reference using dummy vars
+eclsk.sub$hisp<-Recode (eclsk.sub$x_raceth_r, recodes="3:4=1;-9=NA; else=0")
+eclsk.sub$black<-Recode (eclsk.sub$x_raceth_r, recodes="2=1;-9=NA; else=0")
+eclsk.sub$asian<-Recode (eclsk.sub$x_raceth_r, recodes="5=1;-9=NA; else=0")
+eclsk.sub$nahn<-Recode (eclsk.sub$x_raceth_r, recodes="6:7=1;-9=NA; else=0")
+eclsk.sub$other<-Recode (eclsk.sub$x_raceth_r, recodes="8=1;-9=NA; else=0")
+
+
+#Then we recode some parent/mother characteristics
+#Mother's education, recode as 2 dummys with HS = reference
+eclsk.sub$lths<-Recode(eclsk.sub$x12par1ed_i, recodes = "0:2=1; 3:8=0; else = NA")
+eclsk.sub$gths<-Recode(eclsk.sub$x12par1ed_i, recodes = "1:3=0; 4:8=1; else =NA") 
+
+#marital status, recode as 2 dummys, ref= married
+eclsk.sub$single<-Recode(eclsk.sub$p1curmar, recodes="4=1; -7:-9=NA; else=0")
+eclsk.sub$notmar<-Recode(eclsk.sub$p1curmar, recodes="2:3=1; -7:-9=NA; else=0")
+
+
+#Then we do some household level variables
+
+#Urban school location = 1
+eclsk.sub$urban<-Recode(eclsk.sub$x1locale, recodes = "1:3=1; 4=0; -1:-9=NA")
+
+#poverty level in poverty = 1
+eclsk.sub$pov<-Recode(eclsk.sub$x2povty , recodes ="1:2=1; 3=0; -9=NA")
+
+#Household size
+eclsk.sub$hhsize<-eclsk.sub$x1htotal
+
+#school % minority student body
+eclsk.sub$minorsch<-ifelse(eclsk.sub$x2krceth <0, NA, eclsk.sub$x2krceth/10)
+
+#Unsafe neighborhood
+eclsk.sub$unsafe<-Recode(eclsk.sub$p2safepl , recodes = "1:2='unsafe'; 3='safe'; else=NA",as.factor = T)
+
+#school district poverty
+eclsk.sub$dist_pov<-ifelse(eclsk.sub$x_distpov==-9, NA, scale(eclsk.sub$x_distpov))
+```
+
+## Time varying variables
+I have to make the repeated measures of each of my longitudinal variables. These are referred to as **time varying** variables, meaning their values change at each wave.
+
+```{r}
+#Longitudinal variables
+#recode the outcomes, the  first is the child's math standardized test score in Kindergarten
+eclsk.sub$math_1<-ifelse(eclsk.sub$x1mscalk5<0, NA, eclsk.sub$x1mscalk5)
+eclsk.sub$math_2<-ifelse(eclsk.sub$x2mscalk5<0, NA, eclsk.sub$x2mscalk5)
+eclsk.sub$math_4<-ifelse(eclsk.sub$x4mscalk5<0, NA, eclsk.sub$x4mscalk5)
+
+#Second outcome is child's height for age, continuous outcome
+eclsk.sub$height_1<-ifelse(eclsk.sub$x1height<=-7, NA, eclsk.sub$x1height)
+eclsk.sub$height_2<-ifelse(eclsk.sub$x2height<=-7, NA, eclsk.sub$x2height)
+eclsk.sub$height_4<-ifelse(eclsk.sub$x4height<=-7, NA, eclsk.sub$x4height)
+
+#Age at each wave
+eclsk.sub$ageyrs_1<-ifelse(eclsk.sub$x1kage_r<0, NA, eclsk.sub$x1kage_r/12)
+eclsk.sub$ageyrs_2<-ifelse(eclsk.sub$x2kage_r<0, NA, eclsk.sub$x2kage_r/12)
+eclsk.sub$ageyrs_4<-ifelse(eclsk.sub$x4age<0, NA, eclsk.sub$x4age/12)
+eclsk.sub<- eclsk.sub[is.na(eclsk.sub$ageyrs_1)==F, ]
+
+#Height for age z score standardized by sex and age
+eclsk.sub$heightz_1<-ave(eclsk.sub$height_1, as.factor(paste(round(eclsk.sub$ageyrs_1, 1.5), eclsk.sub$male)), FUN=scale)
+eclsk.sub$heightz_2<-ave(eclsk.sub$height_2, as.factor(paste(round(eclsk.sub$ageyrs_2, 1.5), eclsk.sub$male)), FUN=scale)
+eclsk.sub$heightz_4<-ave(eclsk.sub$height_4, as.factor(paste(round(eclsk.sub$ageyrs_4, 1.5), eclsk.sub$male)), FUN=scale)
+
+
+#Household food insecurity, dichotomous outcome
+eclsk.sub$foodinsec_1<-Recode(eclsk.sub$x2fsstat2, recodes="2:3=1; 1=0; else=NA")
+eclsk.sub$foodinsec_2<-Recode(eclsk.sub$x2fsstat2, recodes="2:3=1; 1=0; else=NA")
+eclsk.sub$foodinsec_4<-Recode(eclsk.sub$x4fsstat2, recodes="2:3=1; 1=0; else=NA")
+
+
+#Child health assessment Excellent to poor , ordinal outcome
+eclsk.sub$chhealth_1<-ifelse(eclsk.sub$p1hscale<0, NA, eclsk.sub$p1hscale)
+eclsk.sub$chhealth_2<-ifelse(eclsk.sub$p2hscale<0, NA, eclsk.sub$p2hscale)
+eclsk.sub$chhealth_4<-ifelse(eclsk.sub$p4hscale<0, NA, eclsk.sub$p4hscale)
+
+#SES
+eclsk.sub$hhses_1<-ifelse(eclsk.sub$x12sesl==-9, NA, scale(eclsk.sub$x12sesl))
+eclsk.sub$hhses_2<-ifelse(eclsk.sub$x12sesl==-9, NA, scale(eclsk.sub$x12sesl))
+eclsk.sub$hhses_4<-ifelse(eclsk.sub$x4sesl_i==-9, NA, scale(eclsk.sub$x4sesl_i))
+```
+
+## Reshaping data into longitudinal format
+
+To analyze data longitudinally, we must reshape the data from its current "wide" format, where each repeated measure is a column, into the "long" format, where there is a single column for a particular variable, and we account for the repeated measurements of each person. In this case, I'm going to use three waves of data, so each child can contribute up to three lines to the data.
+
+The `reshape()` function will do this for us, but below I use a tidy method, using a `pivot_longer()` in the `tidyr` packages. 
+
+For the longest time I'd used `stats::reshape()` in the base R, but I've wanted to try to put this into the tidyverse for a long time. The problem was that I've found the examples of how to use `pivot_longer()` a bit limited, usually only reshaping one variable into the long form. In my data and examples for my classes, I often have several time-varying variables to reshape, not just 1 or 2. 
+
+Below, I `select()` the variables that I want to work with, and use `pivot_longer()`. 
+I can specify the non-time varying variables in the `cols()` argument, then the default machinery works pretty well, **as long as my variable names are nice and have names like** **_x_1_**. 
+
+```{r}
+library(tidyr)
+e.long.comp<-eclsk.sub%>%
+  rename(wt = w4c4p_40,strata= w4c4p_4str, psu = w4c4p_4psu)%>%
+  select(childid,male, hisp, black, asian, nahn, other,wt, strata, psu, #time constant
+         height_1, height_2, height_4, #t-varying variables
+         ageyrs_1, ageyrs_2, ageyrs_4,
+         chhealth_1, chhealth_2, chhealth_4,
+         foodinsec_1, foodinsec_2, foodinsec_4,
+         hhses_1, hhses_2, hhses_4,
+         math_1,math_2, math_4)%>%
+  pivot_longer(cols = c(-childid, -male, -hisp, -black, -asian,-nahn, -other, -wt, -strata, -psu), #time constant variables go here
+               names_to  = c(".value", "wave"), #make wave variable and put t-v vars into columns
+               names_sep = "_")%>% #all t-v variables have _ between name and time, like age_1, age_2
+  filter(complete.cases(.))%>%
+  arrange(childid, wave)
+
+
+head(e.long.comp)
+```
+
+
+### Visualization of longitudinal data
+
+```{r}
+library(ggplot2)
+
+first10<-unique(e.long.comp$childid)[1:10]
+
+sub<-e.long.comp%>%
+  filter(childid%in%first10)
+
+ggplot(sub, aes(x=ageyrs, y=math))+geom_point()+ geom_smooth(method='lm',formula=y~x)+facet_wrap(~childid,nrow = 3)+ggtitle(label = "Change in Math score across age", subtitle = "First 10 children in ECLS-K 2011")
+
+```
