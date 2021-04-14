@@ -7,6 +7,7 @@
     <description>Corey Sparks's Blog - Demography and Data Science
 </description>
     <generator>Distill</generator>
+<<<<<<< HEAD
     <lastBuildDate>Wed, 14 Apr 2021 00:00:00 +0000</lastBuildDate>
     <item>
       <title>Using [IPUMS USA](https://usa.ipums.org/usa/) for Estimation of Population Characteristics in Various Geographic Areas</title>
@@ -20,6 +21,9 @@
       <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
       <media:content url="https://coreysparks.github.io/posts/2021-04-14-mapping-ipums-estimates/mapping-ipums-estimates_files/figure-html5/unnamed-chunk-3-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
+=======
+    <lastBuildDate>Mon, 12 Apr 2021 00:00:00 +0000</lastBuildDate>
+>>>>>>> d99becb6a6198698b0cd65d163a69cae890c5808
     <item>
       <title>Using `tidyr` to reshape longitudinal data - a success story</title>
       <dc:creator>Corey S. Sparks, Ph.D.</dc:creator>
