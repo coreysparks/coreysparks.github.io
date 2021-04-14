@@ -85,7 +85,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Using [IPUMS USA](https://usa.ipums.org/usa/) for Estimation of Population Characteristics in Various Geographic Areas</title>
+  <title>Using IPUMS USA for Estimation of Population Characteristics in Various Geographic Areas</title>
 
   <meta property="description" itemprop="description" content="In this example we will use the IPUMS USA data to produce survey-based estimates for various geographic levels present in the IPUMS."/>
 
@@ -96,21 +96,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <meta name="article:author" content="Corey S. Sparks, Ph.D."/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Using [IPUMS USA](https://usa.ipums.org/usa/) for Estimation of Population Characteristics in Various Geographic Areas"/>
+  <meta property="og:title" content="Using IPUMS USA for Estimation of Population Characteristics in Various Geographic Areas"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="In this example we will use the IPUMS USA data to produce survey-based estimates for various geographic levels present in the IPUMS."/>
   <meta property="og:locale" content="en_US"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Using [IPUMS USA](https://usa.ipums.org/usa/) for Estimation of Population Characteristics in Various Geographic Areas"/>
+  <meta property="twitter:title" content="Using IPUMS USA for Estimation of Population Characteristics in Various Geographic Areas"/>
   <meta property="twitter:description" content="In this example we will use the IPUMS USA data to produce survey-based estimates for various geographic levels present in the IPUMS."/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","categories","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Using [IPUMS USA](https://usa.ipums.org/usa/) for Estimation of Population Characteristics in Various Geographic Areas"]},{"type":"character","attributes":{},"value":["Spatial Analysis","Survey data","Census data"]},{"type":"character","attributes":{},"value":["In this example we will use the IPUMS USA data to produce survey-based estimates for various geographic levels present in the IPUMS.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Corey S. Sparks, Ph.D."]},{"type":"character","attributes":{},"value":["https://github.com/coreysparks"]}]}]},{"type":"character","attributes":{},"value":["04-14-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Using IPUMS USA for Estimation of Population Characteristics in Various Geographic Areas"]},{"type":"character","attributes":{},"value":["In this example we will use the IPUMS USA data to produce survey-based estimates for various geographic levels present in the IPUMS.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Corey S. Sparks, Ph.D."]},{"type":"character","attributes":{},"value":["https://github.com/coreysparks"]}]}]},{"type":"character","attributes":{},"value":["04-14-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1454,7 +1454,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Using [IPUMS USA](https://usa.ipums.org/usa/) for Estimation of Population Characteristics in Various Geographic Areas","description":"In this example we will use the IPUMS USA data to produce survey-based estimates for various geographic levels present in the IPUMS.","authors":[{"author":"Corey S. Sparks, Ph.D.","authorURL":"https://github.com/coreysparks","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-04-14T00:00:00.000-05:00","citationText":"Ph.D., 2021"}
+{"title":"Using IPUMS USA for Estimation of Population Characteristics in Various Geographic Areas","description":"In this example we will use the IPUMS USA data to produce survey-based estimates for various geographic levels present in the IPUMS.","authors":[{"author":"Corey S. Sparks, Ph.D.","authorURL":"https://github.com/coreysparks","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-04-14T00:00:00.000-05:00","citationText":"Ph.D., 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1466,11 +1466,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-title">
 <h1>Using IPUMS USA for Estimation of Population Characteristics in Various Geographic Areas</h1>
 <!--radix_placeholder_categories-->
-<div class="dt-tags">
-<div class="dt=tag">Spatial Analysis</div>
-<div class="dt=tag">Survey data</div>
-<div class="dt=tag">Census data</div>
-</div>
 <!--/radix_placeholder_categories-->
 <p><p>In this example we will use the IPUMS USA data to produce survey-based estimates for various geographic levels present in the IPUMS.</p></p>
 </div>
@@ -1508,7 +1503,6 @@ cite the data appropriately. Use command `ipums_conditions()` for more details.<
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-survey.r-forge.r-project.org/survey/'>survey</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-forge.r-project.org/projects/car/'>car</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/walkerke/tigris'>tigris</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-spatial.github.io/classInt/'>classInt</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/mtennekes/tmap'>tmap</a></span><span class='op'>)</span>

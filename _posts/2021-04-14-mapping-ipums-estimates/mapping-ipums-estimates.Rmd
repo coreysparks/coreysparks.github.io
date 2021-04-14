@@ -1,9 +1,5 @@
 ---
-title: "Using [IPUMS USA](https://usa.ipums.org/usa/) for Estimation of Population Characteristics in Various Geographic Areas"
-categories:
-  - Spatial Analysis
-  - Survey data
-  - Census data
+title: "Using IPUMS USA for Estimation of Population Characteristics in Various Geographic Areas"
 description: |
   In this example we will use the IPUMS USA data to produce survey-based estimates for various geographic levels present in the IPUMS.
 author:
@@ -17,10 +13,6 @@ output:
 
 In this example we will use the [IPUMS USA](https://usa.ipums.org/usa/) data to produce survey-based estimates for various geographic levels present in the IPUMS. This example uses the 2014-2018 ACS 5-year microdata. 
 
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 The good folks at IPUMS have created a library to read in their data from the .gz file that you download. Be sure you right click and save the DDI codebook when you create your extract
 
@@ -46,7 +38,6 @@ data<-haven::zap_labels(data) #necessary to avoid problems with "labeled" data
 library(survey)
 library(dplyr)
 library(car)
-library(ggplot2)
 library(tigris)
 library(classInt)
 library(tmap)
