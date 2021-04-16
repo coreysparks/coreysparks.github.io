@@ -12,9 +12,9 @@ output:
 ---
 
 
-In this brief example, I show how to use the GPS coordinates from the [Demographic and Health Survey data](https://dhsprogram.com/) and merge them to the ADM2 subnational geographic level for the country of Ethopia. Then I produce estimates using the DHS data for ADM 2 regions of the country.
+In this brief example, I show how to use the GPS coordinates from the [Demographic and Health Survey data](https://dhsprogram.com/) and merge them to the ADM2 subnational geographic level for the country of Ethiopia. Then I produce estimates using the DHS data for ADM 2 regions of the country.
 
-This is possible by useing the GIS capacity of the `sf` package to spatially intersect the DHS points and the ADM 2 polygons. 
+This is possible by using the GIS capacity of the `sf` package to spatially intersect the DHS points and the ADM 2 polygons. 
 
 ```{r}
 library(sf)
@@ -58,29 +58,42 @@ mapview(eth_dots["DHSCLUST"])+mapview(eth_adm2["NAME_2"])
 
 ## Read in DHS survey and recode stunting outcome
 
-Next, I use the DHS survey data to estimate the prevalence of stunting in the ADM 2 regions.
+Next, I use the DHS survey data to estimate the prevalence of stunting in the ADM 2 regions. 
+
+Here I use all children in the *household recode file*. This allows for the inclusion of all children in households, not just the ones born to respondents of the woman's individual survey. If we wanted to use other characteristics of the mother of a particular child in our analysis, then I would use the *childrens' recode file* instead. Since this post is only concerned with estimating raw prevalence of stunting, the household file works for my purpose. 
+
+In 2000, the height and weight variables with the WHO standard are in a separate file, so I merge them according to DHS guidelines. 
 
 
 ```{r}
 library(haven)
-dhs2000<-read_dta("~/OneDrive - University of Texas at San Antonio//students//fikre/ethiopia_dhs/ETKR41DT/ETKR41FL.DTA")
+library(dplyr)
+dhs2000<-read_dta("~/OneDrive - University of Texas at San Antonio//students//fikre/ethiopia_dhs/ETPR41DT/ETPR41FL.DTA")
 dhs2000<-zap_labels(dhs2000)
 
+htwt00<-read_dta("~/OneDrive - University of Texas at San Antonio//students//fikre/ethiopia_dhs/ETHW41DT/ETHW41FL.DTA")
+htwt00<-zap_labels(htwt00)
+
+dhs2000<- merge(dhs2000, htwt00, by.x = c("hhid", "hvidx"), by.y = c("hwhhid", "hwline"))
+
+dhs2000<- dhs2000%>%
+  filter(hv103==1 & hc1<60)
+
 library(car)
-dhs2000$stunting<-ifelse(dhs2000$hw5/100<=-2&dhs2000$hw5/100!=-2,1,0)
+dhs2000$stunting<-ifelse(dhs2000$hc70/100<=-2&dhs2000$hc70/100!=-2,1,0)
 #dhs2000$sex<-dhs2000$hc27
 
 library(dplyr)
 dhs2000<-dhs2000%>%
-  mutate(wt = v005/1000000)%>%
+  mutate(wt = hv005/1000000)%>%
   filter(complete.cases(stunting))%>%
-  select(v001,stunting, wt, v021, v022)
+  select(hv001,stunting, wt, hv021, hv022)
 ```
 
 ## Merge survey data to sample locations
 
 ```{r}
-dhs2000m<-merge(dhs2000, eth_dots2000, by.x="v001", by.y="DHSCLUST")
+dhs2000m<-merge(dhs2000, eth_dots2000, by.x="hv001", by.y="DHSCLUST")
 
 ```
 
@@ -90,7 +103,7 @@ dhs2000m<-merge(dhs2000, eth_dots2000, by.x="v001", by.y="DHSCLUST")
 ```{r}
 library(survey)
 options(survey.lonely.psu = "adjust")
-des<-svydesign(ids = ~v021, strata = ~v022, weights = ~wt, data=dhs2000m)
+des<-svydesign(ids = ~hv021, strata = ~hv022, weights = ~wt, data=dhs2000m)
 names(dhs2000m)
 est.stunt <- svyby(~stunting, ~ID_2, des, FUN=svymean, na.rm=T)
 
