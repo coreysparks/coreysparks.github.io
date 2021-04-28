@@ -7,7 +7,16 @@
     <description>Corey Sparks's Blog - Demography and Data Science
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Thu, 15 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>DEM 7283 - Splines and Generalized Additive Models</title>
+      <dc:creator>Corey S. Sparks, Ph.D.</dc:creator>
+      <link>https://coreysparks.github.io/posts/2021-04-28-introtosplines</link>
+      <description>In this example, we will describe how to use splines to model nonlinearities in predictor variables.</description>
+      <guid>https://coreysparks.github.io/posts/2021-04-28-introtosplines</guid>
+      <pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://coreysparks.github.io/posts/2021-04-28-introtosplines/introtosplines_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Mapping DHS Survey Estimates to ADM Level 2 Geographies</title>
       <dc:creator>Corey S. Sparks, Ph.D.</dc:creator>
