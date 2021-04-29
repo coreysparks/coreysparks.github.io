@@ -1,5 +1,9 @@
 ---
 title: "Mapping DHS Survey Estimates to ADM Level 2 Geographies"
+categories: 
+  - Spatial Analysis
+  - Survey data
+  - DHS data
 description: |
   In this brief example, I show how to use the GPS coordinates from the DHS data and merge them to the ADM2 subnational geographic level for the country of Ethopia.
 author:
