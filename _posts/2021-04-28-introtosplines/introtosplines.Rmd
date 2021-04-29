@@ -1,5 +1,9 @@
 ---
 title: "DEM 7283 - Splines and Generalized Additive Models"
+categories: 
+  - Applied statistics
+  - Survey data
+  - BRFSS data
 description: |
   In this example, we will describe how to use splines to model nonlinearities in predictor variables.
 author:
