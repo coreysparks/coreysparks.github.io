@@ -5,9 +5,9 @@ date: "7/22/2020"
 output: html_document
 ---
 
-Here are the courses I teach in our Doctoral program in Applied Demography.
+Here are the courses I taught in the Doctoral program in Applied Demography at UTSA.
 
-While at UTSA, I have had the opportunity to develop effective and current courses. My teaching while in the Department of Demography has focused on two main areas; advanced quantitative methods and spatial analysis.  
+While at UTSA, I had the opportunity to develop effective and current courses. My teaching while in the Department of Demography focused on two main areasL: advanced quantitative methods and spatial analysis.  
 
 I have designed courses in introductory statistics, linear models, hazards analysis and multivariate statistics, in addition to two courses in Geographic Information Systems and spatial statistics. 
 
@@ -15,9 +15,7 @@ In general, my philosophy towards instruction is to provide students with up to 
 
 The courses I teach stress the application of the R programming language and the use of the Linux environment.  I encourage hands on usage of computers, along with modern data visualization methods to enhance the learning of students, and I believe based on discussions with colleagues at other institutions, that the curriculum represents a unique graduate educational experience. 
 
-All of my current syllabi can be found the [UTSA Bluebook page.](https://bluebook.utsa.edu)
-
-My current course examples can be seen at [my Rpubs page](https://rpubs.com/corey_sparks)
+Former course examples can be seen at [my Rpubs page](https://rpubs.com/corey_sparks) or on my [Github page](https://github.com/coreysparks)
 
 Demog 7223 Advanced methods for life table analysis
 Demog 7903 Introduction to social demography
