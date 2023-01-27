@@ -1,0 +1,16 @@
+---
+title: "About Me"
+image: "cover.jpg"
+output:
+  postcards::jolla
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+I am a Lead Decision Science Analyst at USAA and an associate professor of instruction at the University of Texas at San Antonio. 
+
+My research focuses primarily on spatial and statistical demography. Substantively, I am interested in human health disparities, food security, historical demography and demography of anthropological populations.
+
+My teaching focuses on the use and application of advanced statistical techniques including hierarchical modeling, hazard modeling, multivariate methods and spatial statistics in human population analysis.
