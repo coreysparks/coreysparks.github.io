@@ -1,0 +1,73 @@
+---
+title: "Selected Projects"
+format: html
+toc: false
+---
+
+## Applied Analytics Projects
+
+In addition to my academic research, I build applied analytics projects that demonstrate how public data can be transformed into usable decision tools. These projects highlight my approach to data product development, from source data acquisition and processing through interactive visualization, spatial analysis, and deployment. They are designed to show how I translate complex datasets into tools that support exploration, interpretation, and operational insight.
+
+## Recent Projects
+
+### JOLTS State Explorer
+
+The JOLTS State Explorer is an interactive dashboard for exploring Bureau of Labor Statistics Job Openings and Labor Turnover Survey data at the state level. The application supports both single state exploration and two state comparison, allowing users to examine trends in job openings, hires, separations, quits, layoffs, and related labor market indicators over time.
+
+From a technical standpoint, this project demonstrates a full analytics workflow. I built a one time data preparation script to download and process public BLS files, integrated multiple metadata tables to produce a clean state level monthly dataset, stored the processed output as parquet for efficient reuse, and developed an interactive front end in Shiny for Python with Plotly. The result is a lightweight, reproducible dashboard that turns a complex federal time series system into an accessible decision support tool.
+
+**What this project demonstrates**
+- Public data ingestion and harmonization
+- Building reusable processed datasets
+- Interactive dashboard design
+- Python based application development
+- Translating labor market data into exploration tools
+
+**Repository**
+- JOLTS dashboard: `coreysparks/jolts-dashboard`
+
+---
+
+### County Health Explorer
+
+The County Health Explorer is an interactive county level health analytics application built in R Shiny. It combines County Health Rankings & Roadmaps data with CDC PLACES to create a national county level exploration tool covering roughly 3,100 counties across all states and the District of Columbia.
+
+The project goes beyond descriptive mapping. In addition to choropleth mapping of health indicators, it includes local spatial autocorrelation analyses, including Local Moran's I and Getis Ord statistics, allowing users to identify geographic clustering, hot spots, cold spots, and local spatial outliers. Source data are integrated using county FIPS identifiers and stored as a merged parquet dataset to support fast loading and responsive analysis.
+
+This project reflects my interest in combining substantive public health questions with scalable spatial analytics. It also shows how I structure applied data products so they are both analytically rigorous and usable by nontechnical audiences.
+
+**What this project demonstrates**
+- Multi source public health data integration
+- County level geospatial analytics
+- Spatial clustering and local dependence analysis
+- Interactive statistical mapping
+- R Shiny development and data product design
+
+**Repository**
+- County Health Explorer: `coreysparks/county_health_data`
+
+---
+
+## How These Projects Relate to My Broader Work
+
+These projects reflect the same strengths that run through my research and applied work more broadly:
+
+- designing reproducible data workflows
+- integrating heterogeneous public datasets
+- building interpretable analytic tools
+- applying spatial, statistical, and predictive methods to real problems
+- communicating results in formats decision makers can use
+
+Together, they show how I move from raw data to production ready analytics assets, including processed datasets, dashboards, and analytic applications.
+
+## Project Development Approach
+
+My project work typically follows a consistent pattern:
+
+1. identify a decision relevant problem or analytic use case  
+2. acquire and normalize raw data from public or administrative sources  
+3. build a reusable processing pipeline  
+4. construct clear summary views and interactive exploration tools  
+5. deploy outputs in a form that supports stakeholder use
+
+This approach helps ensure that projects are not just technically correct, but also useful, maintainable, and easy to extend.

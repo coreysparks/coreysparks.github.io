@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pkill -f \"quarto preview\")",
+      "Bash(pkill -f \"quarto-preview\")",
+      "Bash(quarto preview --no-browser)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/andrewheiss/ath-quarto/main/_quarto.yml\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/andrewheiss/ath-quarto/main/_variables.yml\")",
+      "Bash(curl -s \"https://api.github.com/repos/andrewheiss/ath-quarto/contents/html?ref=main\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/andrewheiss/ath-quarto/main/html/ath.scss\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/andrewheiss/ath-quarto/main/index.qmd\")",
+      "Bash(curl -s \"https://api.github.com/repos/andrewheiss/ath-quarto/contents/_partials?ref=main\")",
+      "Bash(curl -s \"https://api.github.com/repos/andrewheiss/ath-quarto/git/trees/main?recursive=1\")",
+      "Bash(curl -s \"https://api.github.com/repos/andrewheiss/ath-quarto/git/trees/main:html\")",
+      "Bash(jq '.tree[] | select\\(.type == \"\"blob\"\"\\) | .path')",
+      "Bash(curl -s \"https://api.github.com/repos/andrewheiss/ath-quarto/git/trees/main:html/blog\")",
+      "Bash(curl -s \"https://api.github.com/repos/andrewheiss/ath-quarto/git/trees/main:html/research\")",
+      "Bash(curl -s \"https://api.github.com/repos/andrewheiss/ath-quarto/git/trees/main:html/teaching\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/andrewheiss/ath-quarto/main/html/blog/listing.ejs\")"
+    ]
+  }
+}

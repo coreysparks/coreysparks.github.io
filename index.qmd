@@ -1,0 +1,98 @@
+---
+title: "Corey S. Sparks, Ph.D."
+page-layout: full
+title-block-banner: false
+---
+
+```{=html}
+<div class="grid" style="margin-top: 1.5rem; column-gap: 3rem;">
+  <div class="g-col-12 g-col-md-3" style="text-align: center;">
+    <img src="cs_photo.jpg" class="profile-photo" alt="Corey S. Sparks">
+  </div>
+  <div class="g-col-12 g-col-md-9 home-bio">
+    <h1>Hello, I'm Corey.</h1>
+    <p class="lead-role">Senior Research Scientist &middot; Coleridge Initiative</p>
+    <p>
+      I am a senior data and evaluation leader with extensive experience designing enterprise
+      data strategy, governing secure cloud-based analytics environments, and leading
+      multidisciplinary data teams in health and social sector contexts. I am also a former
+      tenured professor at the University of Texas at San Antonio with deep expertise in
+      health data, administrative data integration, and rigorous impact analysis.
+    </p>
+    <p>
+      My work focuses on turning complex data into actionable insight through statistical
+      modeling, spatial analysis, program evaluation, and reproducible analytics workflows.
+      I have published over 40 peer-reviewed articles spanning population health, spatial
+      demography, and quantitative methods.
+    </p>
+    <p>
+      <a href="about.qmd">Learn more about me &rarr;</a> &ensp;
+      <a href="projects.qmd">See my projects &rarr;</a> &ensp;
+      <a href="publications.qmd">View publications &rarr;</a>
+    </p>
+  </div>
+</div>
+```
+
+---
+
+## Core areas of work
+
+### Population health and risk analytics
+
+I study mortality, maternal health, substance use, and other outcomes using large administrative and public health datasets. This work is centered on identifying where risks are increasing, which populations are most affected, and how contextual conditions shape outcomes.
+
+### Spatial data science and geographic inequality
+
+A major part of my work involves understanding how outcomes vary across place. I use geospatial methods and spatial statistical models to analyze segregation, poverty, health disparities, and local clustering, with an emphasis on results that can support targeting and resource allocation.
+
+### Predictive modeling and forecasting
+
+My projects include machine learning and hierarchical forecasting applications designed to support planning and decision making. I focus on methods that are transparent, reproducible, and aligned with how organizations actually use analytic outputs.
+
+### Workforce and life course analytics
+
+I also work on longer-term trajectories, including labor market pathways, demographic transitions, and social mobility. These projects show how longitudinal and cohort-based analytics can be used to identify key inflection points and structural drivers.
+
+---
+
+## Recent applied work
+
+### JOLTS State Explorer
+
+This project transforms public labor market data from the Bureau of Labor Statistics into an interactive dashboard for state-level exploration and comparison. It demonstrates public data ingestion, metadata harmonization, reusable parquet datasets, and interactive dashboard development in Python.
+
+### County Health Explorer
+
+This project integrates County Health Rankings and CDC PLACES data into a county-level health analytics application with choropleth mapping and local spatial autocorrelation analysis. It demonstrates multi-source integration, geospatial analytics, and interactive public health decision support in R Shiny.
+
+---
+
+## Featured publications
+
+```{r}
+#| results: 'asis'
+#| echo: false
+#| warning: false
+#| message: false
+library(readr)
+library(dplyr)
+
+pubs <- read_csv("publications_portfolio.csv", show_col_types = FALSE)
+
+pubs <- pubs %>%
+  mutate(title = gsub("\\{|\\}", "", title),
+         journal = gsub("\\{|\\}", "", journal))
+
+pubs %>%
+  filter(featured == TRUE) %>%
+  arrange(desc(year)) %>%
+  rowwise() %>%
+  mutate(entry = paste0(
+    "- **", title, "** (", year, ")  \n",
+    "  *", journal, "*  \n",
+    "  DOI: [", doi, "](https://doi.org/", doi, ")\n"
+  )) %>%
+  pull(entry) %>%
+  cat(sep = "\n")
+```

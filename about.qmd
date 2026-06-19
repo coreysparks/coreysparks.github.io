@@ -1,0 +1,43 @@
+---
+title: "About"
+---
+
+## Corey S. Sparks, Ph.D.
+
+Senior data and evaluation leader with extensive experience designing enterprise data strategy, governing secure cloud-based analytics environments, and leading multidisciplinary data teams in health and social sector contexts. Former tenured professor with deep expertise in health data, administrative data integration, and rigorous impact analysis.
+
+### Professional Experience
+
+**Coleridge Initiative — Senior Research Scientist**
+
+Provides strategic oversight of secure, cloud-based analytical data environments supporting multi-agency administrative datasets. Partners with data engineers to design dimensional data models in AWS Redshift for longitudinal performance monitoring. Establishes enterprise metric definitions, validation standards, and documentation practices to ensure analytic consistency and auditability. Mentors and supervises data scientists and analysts in analytics, governance, and reproducible research practices.
+
+**USAA — Lead Decision Science Analyst**
+
+Supported enterprise decision making by defining performance metrics and overseeing rigorous analytical workflows across business units. Collaborated with cross-functional teams to translate operational goals into measurable performance indicators and analytic deliverables.
+
+**University of Texas at San Antonio — Associate Professor with Tenure**
+
+Led federally funded research programs integrating survey and administrative health data to evaluate population health outcomes and disparities. Applied advanced statistical methods to longitudinal health data. Published over 40 peer-reviewed articles and presented research nationally and internationally.
+
+### Core Capabilities
+
+- Enterprise Data Strategy and Governance
+- Program Evaluation and Impact Measurement
+- Health and Administrative Data Integration
+- AWS Redshift Analytics Oversight
+- Metric Standardization and KPI Development
+- HIPAA-Aligned Data Stewardship
+- Technical Fluency: AWS Redshift, SQL, R, Python, Snowflake, SAS
+
+### Education
+
+- **Ph.D.**, Demography and Anthropology — Pennsylvania State University
+- **M.A.**, Anthropology — University of Tennessee
+- **B.A.**, Anthropology
+
+### Contact
+
+- Email: [Corey.sparks.utsa@gmail.com](mailto:Corey.sparks.utsa@gmail.com)
+- GitHub: [github.com/coreysparks](https://github.com/coreysparks)
+- LinkedIn: [linkedin.com/in/coreyssparks](https://www.linkedin.com/in/coreyssparks)
