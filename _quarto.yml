@@ -5,6 +5,7 @@ project:
     - index.qmd
     - research.qmd
     - teaching.qmd
+    - consulting.qmd
 
 website:
   title: "Corey S. Sparks, Ph.D."
@@ -22,6 +23,8 @@ website:
         text: Research
       - href: teaching.qmd
         text: Teaching
+      - href: consulting.qmd
+        text: Consulting
     right:
       - text: CV
         href: cv.pdf

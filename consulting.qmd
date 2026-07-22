@@ -1,0 +1,92 @@
+---
+title: "Consulting"
+subtitle: "Statistical, demographic, and spatial data science"
+toc: false
+---
+
+## How I can help
+
+I work with organizations, agencies, and research teams that need rigorous,
+defensible analysis of population and health data. My consulting draws on more
+than two decades of applied experience in demography, biostatistics, and spatial
+data science, and on a track record of peer-reviewed research and applied analytics.
+
+Typical engagements include:
+
+- **Statistical analysis and modeling.** Regression, hierarchical and multilevel
+  models, Bayesian estimation, survival and event-history analysis, and survey-weighted
+  estimation, with clear interpretation for technical and non-technical audiences.
+- **Demographic and health data analysis.** Mortality, fertility, migration,
+  small-area estimation, population projections, and analysis of large administrative
+  and public health datasets.
+- **Spatial analysis and mapping.** Exploratory spatial data analysis, spatial
+  regression, segregation and clustering measures, and publication-quality maps and
+  geographic data products.
+- **Forecasting and prediction.** Hierarchical forecasting and machine learning
+  models built for transparency, validation, and real decision support.
+- **Reproducible workflows and training.** Analytic pipelines in R, reproducible
+  reporting with Quarto, and hands-on training for analytic teams.
+
+## Selected past engagements
+
+I have served as a statistical consultant for [Every Texan](https://everytexan.org)
+and the [National Women's Law Center](https://nwlc.org), providing analysis of
+demographic and policy-relevant data. I have also worked as an educational
+consultant for [Caring Across Generations](https://caringacross.org) and the
+[Coleridge Initiative](https://coleridgeinitiative.org), developing and delivering
+training in applied data analysis and reproducible research methods.
+
+## Send a message
+
+If you have a project in mind, use the form below with a short description and I
+will follow up to discuss scope, timeline, and fit.
+
+```{=html}
+<!--
+  This form posts to Formspree. To activate it:
+  1. Create a free form at https://formspree.io (send-to: corey.sparks@utsa.edu)
+  2. Copy the form's endpoint ID and replace YOUR_FORM_ID below.
+-->
+<form action="https://formspree.io/f/mgoglzkd" method="POST" class="consult-form">
+  <input type="hidden" name="_subject" value="Consulting inquiry from coreysparks.github.io">
+
+  <div class="form-row">
+    <label for="name">Name <span class="req">*</span></label>
+    <input type="text" id="name" name="name" required>
+  </div>
+
+  <div class="form-row">
+    <label for="email">Email <span class="req">*</span></label>
+    <input type="email" id="email" name="email" required>
+  </div>
+
+  <div class="form-row">
+    <label for="organization">Organization</label>
+    <input type="text" id="organization" name="organization">
+  </div>
+
+  <div class="form-row">
+    <label for="engagement">Type of engagement</label>
+    <select id="engagement" name="engagement">
+      <option value="">Select one (optional)</option>
+      <option>Statistical analysis and modeling</option>
+      <option>Demographic or health data analysis</option>
+      <option>Spatial analysis and mapping</option>
+      <option>Forecasting and prediction</option>
+      <option>Reproducible workflows or training</option>
+      <option>Other</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="message">Project description <span class="req">*</span></label>
+    <textarea id="message" name="message" rows="6" required
+      placeholder="Briefly describe the project, the data involved, and your timeline."></textarea>
+  </div>
+
+  <button type="submit" class="consult-submit">Send message</button>
+</form>
+```
+
+Prefer email? Reach me directly at
+[corey.sparks@utsa.edu](mailto:corey.sparks@utsa.edu).
