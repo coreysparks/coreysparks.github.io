@@ -1,0 +1,26 @@
+name: "Corey S. Sparks"
+output_dir: "."
+navbar:
+  title: "Corey S. Sparks, Ph.D."
+  left:
+    - text: "CV"
+      href: cv.pdf
+    - text: "R stuff"
+      href: r.html
+    - text: "Teaching"
+      href: teaching.html
+  right:
+    - icon: fa-envelope-o
+      href: mailto:corey.sparks@utsa.edu
+    - icon: fa-github
+      href: https://github.com/coreysparks
+    - icon: fa-twitter
+      href: https://twitter.com/coreysparks1
+    - icon: fa-linkedin
+      href: https://www.linkedin.com/in/corey-sparks-17b0911b/
+output:
+  html_document:
+    theme: readable
+    highlight: textmate
+    lib_dir: site_libs
+    self_contained: true
