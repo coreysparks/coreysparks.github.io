@@ -212,8 +212,16 @@ h3 { color: $navy-soft; margin-top: 1.5rem; }
   .course-code {
     font-family: 'Spectral', Georgia, serif;
     font-weight: 600;
-    color: $accent;
+    color: $navy;
     margin-right: 0.4rem;
+
+    a {
+      color: $accent;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      &:hover { color: $accent-dark; }
+    }
   }
 }
 
