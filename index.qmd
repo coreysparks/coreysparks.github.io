@@ -87,6 +87,6 @@ for the full record.
 
 I welcome inquiries from prospective students, collaborators, and colleagues.
 
-Email: [corey.sparks.utsa@gmail.com](mailto:corey.sparks.utsa@gmail.com)
-GitHub: [github.com/coreysparks](https://github.com/coreysparks)
-Code and course materials: [RPubs](https://rpubs.com/corey_sparks)
+Email: [corey.sparks@utsa.edu](mailto:corey.sparks@utsa.edu)\
+GitHub: [github.com/coreysparks](https://github.com/coreysparks)\
+Code and course materials: [github.com/coreysparks?tab=repositories](https://github.com/coreysparks?tab=repositories)

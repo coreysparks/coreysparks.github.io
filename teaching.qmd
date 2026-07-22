@@ -29,13 +29,13 @@ statistics, geographic information systems, and spatial statistics. Representati
 courses include:
 
 ::: {.course-list}
-- <span class="course-code">DEM 7223</span> Advanced Methods for Life Table Analysis
+- <span class="course-code"><a href="https://github.com/coreysparks/DEM7223">DEM 7223</a></span> Advanced Methods for Life Table Analysis
 - <span class="course-code">DEM 7903</span> Introduction to Social Demography
 - <span class="course-code">DEM 7903</span> Multivariate Statistical Analysis
-- <span class="course-code">DEM 7273</span> Statistical Methods for Demographic Data I
-- <span class="course-code">DEM 7283</span> Statistical Methods for Demographic Data II
-- <span class="course-code">DEM 7263</span> Spatial Demography
-- <span class="course-code">DEM 7093</span> GIS for Population Science
+- <span class="course-code"><a href="https://github.com/coreysparks/DEM7273">DEM 7273</a></span> Statistical Methods for Demographic Data I
+- <span class="course-code"><a href="https://github.com/coreysparks/DEM7283">DEM 7283</a></span> Statistical Methods for Demographic Data II
+- <span class="course-code"><a href="https://github.com/coreysparks/DEM7263">DEM 7263</a></span> Spatial Demography
+- <span class="course-code"><a href="https://github.com/coreysparks/DEM7093">DEM 7093</a></span> GIS for Population Science
 :::
 
 ## Course materials and code
