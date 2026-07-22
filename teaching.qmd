@@ -1,0 +1,53 @@
+---
+title: "Teaching"
+subtitle: "Graduate methods for population science"
+toc: true
+toc-title: "On this page"
+---
+
+## Teaching philosophy
+
+My teaching centers on advanced quantitative and spatial methods for population
+science. I aim to give students up-to-date instruction on the methods currently
+used by professionals across the diverse field of demography, and to provide an
+arena where they can gain hands-on experience applying those methods to practical,
+realistic problems. Coursework emphasizes the R programming language, modern data
+visualization, and reproducible workflows, so that students leave not only
+understanding a method but able to implement it on real data.
+
+I believe demographic training is strongest when technical rigor is paired with
+substantive interpretation. Students learn to move from a research question to an
+appropriate model, to fit and check that model in code, and to communicate results
+clearly. Where possible I use realistic data and problems so that methods are
+learned in the context in which they will actually be used.
+
+## Courses
+
+I have designed and taught graduate courses spanning introductory statistics,
+linear and hierarchical models, event history and hazard analysis, multivariate
+statistics, geographic information systems, and spatial statistics. Representative
+courses include:
+
+::: {.course-list}
+- <span class="course-code">DEM 7223</span> Advanced Methods for Life Table Analysis
+- <span class="course-code">DEM 7903</span> Introduction to Social Demography
+- <span class="course-code">DEM 7903</span> Multivariate Statistical Analysis
+- <span class="course-code">DEM 7273</span> Statistical Methods for Demographic Data I
+- <span class="course-code">DEM 7283</span> Statistical Methods for Demographic Data II
+- <span class="course-code">DEM 7263</span> Spatial Demography
+- <span class="course-code">DEM 7093</span> GIS for Population Science
+:::
+
+## Course materials and code
+
+Many of my course examples, worked analyses, and R tutorials are freely available:
+
+- Worked examples and lecture materials on [RPubs](https://rpubs.com/corey_sparks)
+- Course code and data on [GitHub](https://github.com/coreysparks)
+
+## Advising
+
+I welcome inquiries from prospective graduate students interested in demography,
+population health, spatial analysis, and applied statistics. Students with
+quantitative interests and a substantive question about population and health are
+encouraged to reach out by [email](mailto:corey.sparks.utsa@gmail.com).

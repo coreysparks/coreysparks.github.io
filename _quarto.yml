@@ -1,30 +1,33 @@
 project:
   type: website
+  output-dir: _site
   render:
-    - "*.qmd"
-    - "!research_portfolio_site.qmd"
-    - "!old_site/**"
+    - index.qmd
+    - research.qmd
+    - teaching.qmd
 
 website:
-  title: "Corey S. Sparks"
+  title: "Corey S. Sparks, Ph.D."
   site-url: "https://coreysparks.github.io"
+  favicon: cs_photo.jpg
 
   navbar:
     pinned: true
-    background: "#1B2A4A"
+    background: "#0F2A47"
     foreground: "white"
     left:
       - href: index.qmd
         text: Home
-      - href: projects.qmd
-        text: Projects
-      - href: data-systems.qmd
-        text: Data Systems
-      - href: publications.qmd
-        text: Publications
-      - href: about.qmd
-        text: About
+      - href: research.qmd
+        text: Research
+      - href: teaching.qmd
+        text: Teaching
     right:
+      - text: CV
+        href: cv.pdf
+      - icon: mortarboard-fill
+        href: https://scholar.google.com/citations?hl=en&user=ihmc__0AAAAJ
+        aria-label: Google Scholar
       - icon: github
         href: https://github.com/coreysparks
         aria-label: GitHub
@@ -32,14 +35,14 @@ website:
         href: https://www.linkedin.com/in/coreyssparks
         aria-label: LinkedIn
       - icon: envelope
-        href: mailto:Corey.sparks.utsa@gmail.com
+        href: mailto:corey.sparks.utsa@gmail.com
         aria-label: Email
 
   page-footer:
     left: |
-      &copy; 2025 Corey S. Sparks, Ph.D.
+      &copy; 2026 Corey S. Sparks, Ph.D.
     center: |
-      Senior Research Scientist, [Coleridge Initiative](https://coleridgeinitiative.org)
+      Professor, Department of Sociology and Demography &middot; The University of Texas at San Antonio
     right: |
       Built with [Quarto](https://quarto.org)
 

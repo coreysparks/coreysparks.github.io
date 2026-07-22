@@ -4,4 +4,11 @@
 .Ruserdata
 
 /.quarto/
+/_site/
 **/*.quarto_ipynb
+.DS_Store
+
+# Archived previous site versions (kept locally, not tracked)
+/oldsite/
+/old_site/
+/_drafts/

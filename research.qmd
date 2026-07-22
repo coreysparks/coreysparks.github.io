@@ -1,0 +1,118 @@
+---
+title: "Research"
+subtitle: "Population health, spatial demography, and applied statistics"
+toc: true
+toc-title: "On this page"
+---
+
+## Overview
+
+My research program uses demographic and statistical methods to understand how
+population processes and geographic context shape human health and wellbeing.
+Three commitments run through this work: substantive questions about health and
+inequality, careful attention to spatial and multilevel structure in data, and a
+methodological preference for models that are transparent and reproducible. Most
+of my analysis is carried out in R, drawing on large survey and administrative
+datasets from sources such as the U.S. Census, the Demographic and Health
+Surveys, and vital statistics systems.
+
+The full publication record is available on
+[Google Scholar](https://scholar.google.com/citations?hl=en&user=ihmc__0AAAAJ),
+and worked examples and course code are posted on
+[RPubs](https://rpubs.com/corey_sparks) and
+[GitHub](https://github.com/coreysparks).
+
+## Research themes
+
+::: {.research-area}
+### Spatial demography and geographic inequality
+
+I examine how mortality, poverty, and social outcomes cluster across places, using
+exploratory spatial data analysis and spatial regression to study residential
+segregation, poverty concentration, and local spatial dependence. This line of
+work includes both substantive studies of segregation and methodological
+contributions on measuring and modeling spatial structure in the social sciences.
+:::
+
+::: {.research-area}
+### Population health and mortality
+
+I study mortality, maternal and child health, substance use, and nutrition,
+with attention to how contextual conditions and social position shape risk across
+populations. Recent work includes analyses of drug overdose mortality across
+US-born and immigrant groups and trends in maternal mortality in the United States.
+:::
+
+::: {.research-area}
+### Statistical and predictive methods
+
+I develop and apply hierarchical and Bayesian models, small-area estimation,
+hierarchical forecasting, and machine learning to demographic and public health
+problems, including undernutrition prediction and mortality forecasting for
+resource allocation.
+:::
+
+::: {.research-area}
+### Workforce and life-course demography
+
+I also study life-course and cohort dynamics, including how the timing of labor
+market entry shapes early-career trajectories, using longitudinal data to separate
+structural drivers from period shocks.
+:::
+
+## Publications by theme
+
+The selected publications below are grouped by theme and listed most recent first.
+
+::: {.panel-tabset}
+
+## Spatial Demography & Geographic Inequality
+
+- **Review of Guangqing Chi and Jun Zhu: Spatial Regression Models for the Social Sciences** (2020). *Spatial Demography*. [DOI](https://doi.org/10.1007/s40980-020-00057-4)
+- **Historic Roots of Modern Residential Segregation in a Southwestern Metropolis: San Antonio, Texas in 1910 and 2010** (2017). *Urban Science*. [DOI](https://doi.org/10.3390/urbansci1020019)
+- **Measuring Residential Segregation using R** (2014). *Spatial Demography*. [DOI](https://doi.org/10.1007/bf03354906)
+- **A Study of County Child Poverty Rates in Puerto Rico: Does Space Matter?** (2013). *Spatial Demography*. [DOI](https://doi.org/10.1007/bf03354888)
+- **Poverty segregation in nonmetro counties: A spatial exploration of segregation patterns in the US** (2013). *Spatial Demography*. [DOI](https://doi.org/10.1007/bf03354896)
+- **Spatial Analysis in R: Part 1 Getting data from the ACS into R and Exploratory Spatial Data Analysis** (2013). *Spatial Demography*. [DOI](https://doi.org/10.1007/bf03354891)
+- **Spatial analysis in R: Part 2 - Performing spatial regression modeling in R with ACS data.** (2013). *Spatial Demography*. [DOI](https://doi.org/10.1007/bf03354900)
+- **An application of Bayesian spatial statistical methods to the study of racial and poverty segregation and infant mortality rates in the US** (2012). *GeoJournal*. [DOI](https://doi.org/10.1007/s10708-011-9445-3)
+- **An application of spatially autoregressive models to the study of US county mortality rates** (2009). *Population, Space and Place*. [DOI](https://doi.org/10.1002/psp.564)
+
+## Population Health & Mortality
+
+- **Drug overdose mortality by race/ethnicity across US-born and immigrant populations** (2022). *Drug and Alcohol Dependence*. [DOI](https://doi.org/10.1016/j.drugalcdep.2022.109309)
+- **How Does the Context of Reception Matter? The Role of Residential Enclaves in Maternal Smoking During Pregnancy Among Mexican-Origin Mothers** (2015). *Maternal and child health journal*. [DOI](https://doi.org/10.1007/s10995-015-1696-z)
+
+## Statistical & Predictive Methods
+
+- **Hierarchical forecasts of Diabetes mortality in Mexico by marginalization and sex to establish resource allocation** (2021). *EconoQuantum*. [DOI](https://doi.org/10.18381/eq.v18i2.7225)
+- **Machine learning algorithms for predicting undernutrition among under-five children in Ethiopia** (2021). *Public Health Nutrition*. [DOI](https://doi.org/10.1017/s1368980021004262)
+
+## Workforce & Life-Course Demography
+
+- **Early-career trajectories of young workers in the U.S. in the context of the 2008–09 recession: The effect of labor market entry timing** (2019). *PLOS ONE*. [DOI](https://doi.org/10.1371/journal.pone.0214234)
+
+## Methods, Reviews & Other Scholarship
+
+- **Trends in Mortality Among Pregnant and Recently Pregnant Women in the US, 2015-2019** (2021). *JAMA*. [DOI](https://doi.org/10.1001/jama.2021.13971)
+- **Population Research Briefs in Population Research and Policy Review** (2019). *Population Research and Policy Review*. [DOI](https://doi.org/10.1007/s11113-019-09522-5)
+- **Sexual Harassment in the Military: Individual Experiences, Demographics, and Organizational Contexts** (2017). *Armed Forces & Society*. [DOI](https://doi.org/10.1177/0095327x16687069)
+- **An examination of disparities in cancer incidence in Texas using Bayesian random coefficient models** (2015). [DOI](https://doi.org/10.7287/peerj.preprints.814v3)
+- **Racial segregation and maternal smoking during pregnancy: A multilevel analysis using the racial segregation interaction index** (2014). *Social Science & Medicine*. [DOI](https://doi.org/10.1016/j.socscimed.2014.01.030)
+- **Texas Latino Prison Gangs: An Exploration of Generational Shift and Rebellion** (2014). *The Prison Journal*. [DOI](https://doi.org/10.1177/0032885514524694)
+- **Decomposing Kenyan socio-economic inequalities in skilled birth attendance and measles immunization** (2013). *Int J Equity Health*. [DOI](https://doi.org/10.1186/1475-9276-12-3)
+- **Infant mortality and intra‐household competition in the Northern Islands of Orkney, Scotland, 1855–2001** (2013). *American Journal of Physical Anthropology*. [DOI](https://doi.org/10.1002/ajpa.22264)
+- **County-level poverty estimates for the contiguous United States, 2001, 2005** (2012). *Journal of Maps*. [DOI](https://doi.org/10.1080/17445647.2012.751061)
+- **Socioeconomic position, rural residence, and marginality influences on obesity status in the adult Mexican population** (2012). *International Journal of Population Research*. [DOI](https://doi.org/10.1155/2012/757538)
+- **Violent crime in San Antonio, Texas: An application of spatial epidemiological methods** (2011). *Spatial and Spatio-temporal Epidemiology*. [DOI](https://doi.org/10.1016/j.sste.2011.10.001)
+- **Parental investment and socioeconomic status influences on children’s height in Honduras: An analysis of national data** (2010). *American Journal of Human Biology*. [DOI](https://doi.org/10.1002/ajhb.21104)
+- **An application of the variable-r method to subpopulation growth rates in a 19th century agricultural population** (2009). *Demographic Research*. [DOI](https://doi.org/10.4054/demres.2009.21.2)
+- **Life histories, blood revenge, and reproductive success among the Waorani of Ecuador** (2009). *Proceedings of the National Academy of Sciences*. [DOI](https://doi.org/10.1073/pnas.0901431106)
+- **Understanding Carpool Use by Hispanics in Texas** (2009). *Transportation Research Record: Journal of the Transportation Research Board*. [DOI](https://doi.org/10.3141/2118-06)
+- **Changing Times, Changing Faces: Franz Boas’s Immigrant Study in Modern Perspective** (2003). *American Anthropologist*. [DOI](https://doi.org/10.1525/aa.2003.105.2.333)
+- **Cranial Modification Among 19 th Century Osages: Admixture and Loss of an Ethnic Marker** (2003). *The Plains Anthropologist*. [DOI](https://doi.org/10.1080/2052546.2003.11949261)
+- **A reassessment of human cranial plasticity: Boas revisited** (2002). *Proceedings of the National Academy of Sciences*. [DOI](https://doi.org/10.1073/pnas.222389599)
+
+:::
+
+Selected earlier work in biological and historical demography, including studies of the Boas cranial plasticity data and reproductive success among the Waorani, appears in the final tab above.
