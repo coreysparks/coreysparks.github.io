@@ -178,6 +178,24 @@ h3 { color: $navy-soft; margin-top: 1.5rem; }
   h3 { margin-top: 0; color: $navy; }
 }
 
+/*-- Book feature --*/
+.book-feature {
+  border: 1px solid $gray-200;
+  background-color: $gray-100;
+  border-radius: 4px;
+  padding: 1.1rem 1.4rem;
+  margin: 1.4rem 0;
+
+  h3 { margin-top: 0; color: $navy; }
+}
+
+.book-link {
+  display: inline-block;
+  font-family: 'Spectral', Georgia, serif;
+  font-weight: 600;
+  margin-top: 0.4rem;
+}
+
 /*-- Publication tabset --*/
 .panel-tabset {
   margin-top: 1.25rem;

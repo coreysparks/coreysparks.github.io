@@ -36,6 +36,18 @@ title-block-banner: false
 </div>
 ```
 
+## Book
+
+::: {.book-feature}
+### Applied Demographic Data Analysis
+
+A hands-on guide to statistical methods for demographers, covering survey data
+analysis, macrodemographic analysis, and microdemographic event history models,
+with an emphasis on practical application in R rather than theoretical proofs.
+
+[Read the book &rarr;](https://coreysparks.github.io/appdem_Book/){.book-link}
+:::
+
 ## Research areas
 
 ::: {.research-area}
